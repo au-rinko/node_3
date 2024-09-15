@@ -9,7 +9,7 @@ const { deleteMovie } = require('./routes/delete');
 
 const app = express();
 
-//getTop250Movies(TOP_250);
+getTop250Movies(TOP_250);
 
 app.use(express.json());
 
@@ -23,7 +23,7 @@ app.use('/api/films/create', createMovie);
 app.use('/api/films/update', updateMovie);
 app.use('/api/films/delete', deleteMovie);
 
-app.use((req, res, next) => {
+app.use((req, res) => {
   res.status(404);
   res.send('Page not found');
 });

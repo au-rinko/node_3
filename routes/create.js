@@ -14,7 +14,7 @@ createMovie.post('/', (req, res) => {
         res.send('Not enough information');
     }
 
-    const message = checkInformation(body, 'no needed');
+    const message = checkInformation(body);
 
     if (message) {
         res.status(400);

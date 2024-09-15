@@ -14,38 +14,45 @@ updateMovie.put('/:id', (req, res) => {
         res.send('Not enough information');
     }
 
-    const message = checkInformation(body, id);
+    const message = checkInformation(body);
+
+    console.log(id);
     
     if (message) {
         res.status(400);
         res.send(message);
     } else {
         const indexForUpdate = moviesArray.findIndex(item => item.id == id);
-        let itemForUpdate = moviesArray.filter(item => +item.id == id);
-        itemForUpdate = itemForUpdate.map(item => {
-            return {
-                id: item.id,
-                name: body.name || item.name,
-                rating: body.rating || item.rating,
-                year: body.year || item.year,
-                budget: body.budget || item.budget,
-                gross: body.gross || item.gross,
-                poster: body.poster || item.poster,
-                position: body.position || item.position
-            }
-        });
-
-        if (body.position) {
-            moviesArray.splice(indexForUpdate, 1);
-            correctPosition(body, itemForUpdate);
+        if (indexForUpdate === -1) {
+            res.status(400);
+            res.send('Check the request id');
         } else {
-            moviesArray = moviesArray.map(item => item.id != id ? item : itemForUpdate);
+            let itemForUpdate = moviesArray.filter(item => item.id == id);
+            itemForUpdate = itemForUpdate.map(item => {
+                return {
+                    id: item.id,
+                    name: body.name || item.name,
+                    rating: body.rating || item.rating,
+                    year: body.year || item.year,
+                    budget: body.budget || item.budget,
+                    gross: body.gross || item.gross,
+                    poster: body.poster || item.poster,
+                    position: body.position || item.position
+                }
+            });
+    
+            if (body.position) {
+                moviesArray.splice(indexForUpdate, 1);
+                correctPosition(body, itemForUpdate);
+            } else {
+                moviesArray = moviesArray.map(item => item.id != id ? item : itemForUpdate);
+            }
+        
+            writeToFile(moviesArray);
+        
+            res.status(200);
+            res.json(itemForUpdate);
         }
-    
-        writeToFile(moviesArray);
-    
-        res.status(200);
-        res.json(itemForUpdate);
     }
 });
 

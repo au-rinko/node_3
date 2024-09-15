@@ -4,24 +4,29 @@ const { moviesArray, readAll } = require('./routes/readall');
 
 function checkInformation (body, id) {
     let message = null;
+
+    if (body.name && typeof body.name !== 'string') {
+        message = 'Title should be a string';
+    }
     
-    if (+body.year < 1895) {
+    if (body.year && (body.year < 1895 || body.year > 2024 || typeof body.year !== 'number')) {
         message = 'Year is incorrect';
+    }
+
+    if (body.rating && (body.rating < 0 || body.rating > 10 || typeof body.rating !== 'number')) {
+        message = 'Rating is incorrect';
+    }
+
+    if (body.position && typeof body.position !== 'number') {
+        message = 'Position should be a number';
     }
 
     if (parseInt(body.budget) < 0 || parseInt(body.gross) < 0 || body.position < 0) {
         message = 'Numbers cannot be negative';
     }
 
-    if (!id) {
-        message = 'Enter the correct id';
-    }
-
-    if (id !== 'no needed') {
-        const result = moviesArray.filter(item => item.id == id);
-        if (result.length === 0) {
-            message = 'There is no movie with such id';
-        }
+    if (body.poster && (body.poster.startsWith('http') || typeof body.poster !== 'string')) {
+        message = 'Poster should contain a link';
     }
 
     return message;

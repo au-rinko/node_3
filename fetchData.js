@@ -3,7 +3,7 @@ const fs = require('fs');
 const API_KEY = '0152Y11-92R4KF4-N78B2Z9-69YT8VA';
 const TOP_250 = 'https://api.kinopoisk.dev/v1.4/movie?page=1&limit=250&lists=top250&selectFields=id&selectFields=name&selectFields=year&selectFields=rating&selectFields=budget&selectFields=poster&selectFields=fees&selectFields=top250';
 
-//getTop250Movies(TOP_250);
+getTop250Movies(TOP_250);
 
 let moviesArray = [];
 

@@ -9,13 +9,12 @@ const deleteMovie = express.Router();
 deleteMovie.delete('/:id', (req, res) => {
     const { body, params: { id } } = req;
 
-    const message = checkInformation(body, id);
-    
-    if (message) {
+    const subArray = moviesArray.filter(item => item.id == id);
+ 
+    if (subArray.length === 0) {
         res.status(400);
-        res.send(message);
+        res.send('There is no movie with such id');
     } else {
-        const subArray = moviesArray.filter(item => item.id == id);
         const index = moviesArray.indexOf(subArray[0]);
         moviesArray.splice(index, 1);
         for (let i = index; i < moviesArray.length; i++) {
