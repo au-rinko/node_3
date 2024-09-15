@@ -1,8 +1,11 @@
 const express = require('express');
 const fs = require('fs');
-const { getTop250Movies, TOP_250 } = require('./fetchData');
+const { getTop250Movies, writeToFile, TOP_250 } = require('./fetchData');
 const { moviesArray, readAll } = require('./routes/readall');
 const { read } = require('./routes/read');
+const { createMovie } = require('./routes/create');
+const { updateMovie } = require('./routes/update');
+const { deleteMovie } = require('./routes/delete');
 
 const app = express();
 
@@ -16,6 +19,9 @@ app.get('/', (req, res) => {
 
 app.use('/api/films/readall', readAll);
 app.use('/api/films/read', read);
+app.use('/api/films/create', createMovie);
+app.use('/api/films/update', updateMovie);
+app.use('/api/films/delete', deleteMovie);
 
 app.use((req, res, next) => {
   res.status(404);

@@ -38,7 +38,14 @@ function createJsonFile(data) {
     });
 }
 
+function writeToFile(data) {
+    fs.writeFile('./movies.json', JSON.stringify(data), (err) => {
+        if(err) console.log(err);
+    });
+}
+
 module.exports = {
     getTop250Movies,
+    writeToFile,
     TOP_250,
 }
