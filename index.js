@@ -9,7 +9,9 @@ const { deleteMovie } = require('./routes/delete');
 
 const app = express();
 
-getTop250Movies(TOP_250);
+if (moviesArray.length === 0) {
+  getTop250Movies(TOP_250);
+}
 
 app.use(express.json());
 

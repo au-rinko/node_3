@@ -6,7 +6,7 @@ function checkInformation (body, id) {
     let message = null;
 
     if (body.name && typeof body.name !== 'string') {
-        message = 'Title should be a string';
+        message = 'Name should be a string';
     }
     
     if (body.year && (body.year < 1895 || body.year > 2024 || typeof body.year !== 'number')) {
@@ -25,7 +25,15 @@ function checkInformation (body, id) {
         message = 'Numbers cannot be negative';
     }
 
-    if (body.poster && (body.poster.startsWith('http') || typeof body.poster !== 'string')) {
+    if (isNaN(parseInt(body.budget))) {
+        message = 'Bugdet should start with a number';
+    }
+
+    if (isNaN(parseInt(body.gross))) {
+        message = 'Gross should start with a number';
+    }
+
+    if (body.poster && (!body.poster.startsWith('http') || typeof body.poster !== 'string')) {
         message = 'Poster should contain a link';
     }
 
